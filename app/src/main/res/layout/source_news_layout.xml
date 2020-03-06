@@ -20,7 +20,7 @@
             android:scaleType="centerCrop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/news_title_logo"
+            android:src="@drawable/news_source_logo_2"
             android:layout_weight="3"
             android:layout_marginLeft="5dp"
             />

@@ -1,6 +1,8 @@
 package com.example.newsapp.Adapter.ViewHolder
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.Common.ISO8601Parser
 import com.example.newsapp.Interface.ItemClickListener
 import com.example.newsapp.Model.Article
+import com.example.newsapp.NewsDetail
 import com.example.newsapp.R
 import com.squareup.picasso.Picasso
 import java.text.ParseException
@@ -31,16 +34,13 @@ class ListNewsAdapter (val articleList: MutableList<Article>, private  val conte
         Picasso.get()
             .load(articleList[position].urlToImage)
             .into(holder.article_image)
-        if (articleList[position].title!!.length > 65)
-        {
+        if (articleList[position].title!!.length > 65) {
             holder.article_title.text = articleList[position].title!!.substring(0, 65)+"..."
-        }else
-        {
+        }else {
             holder.article_title.text = articleList[position].title!!
         }
 
-        if (articleList[position].publishedAt != null)
-        {
+        if (articleList[position].publishedAt != null) {
             var date: Date? = null
             try {
                 date =ISO8601Parser.parse(articleList[position].publishedAt!!)
@@ -52,7 +52,11 @@ class ListNewsAdapter (val articleList: MutableList<Article>, private  val conte
 
         holder.setItemClickListener(object : ItemClickListener{
             override fun onClick(view: View, position: Int) {
-                //Soon
+                val detail = Intent(context, NewsDetail::class.java)
+                detail.putExtra("webURL", articleList[position].url)
+                Log.d("MyTAG",detail.getStringExtra("webURL"))
+                detail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(detail)
             }
         })
 

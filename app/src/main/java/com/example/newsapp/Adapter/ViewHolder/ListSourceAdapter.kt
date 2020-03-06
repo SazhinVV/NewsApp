@@ -2,10 +2,10 @@ package com.example.newsapp.Adapter.ViewHolder
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.Interface.ItemClickListener
 import com.example.newsapp.ListNews
@@ -25,6 +25,17 @@ class ListSourceAdapter (private val context: Context, private val webSite: WebS
 
     override fun onBindViewHolder(holder: ListSourceViewHolder, position: Int) {
         holder.source_title.text = webSite.sources!![position].name
+        var x = (1..5).shuffled().first()
+        Log.d("MyTAG", "${x}")
+        when(x){
+            1 -> holder.source_image.setImageResource(R.drawable.news_source_logo_1)
+            2 -> holder.source_image.setImageResource(R.drawable.news_source_logo_2)
+            3 -> holder.source_image.setImageResource(R.drawable.news_source_logo_3)
+            4 -> holder.source_image.setImageResource(R.drawable.news_source_logo_4)
+            5 -> holder.source_image.setImageResource(R.drawable.news_source_logo_5)
+        }
+
+
 
         holder.setItemClickListener(object : ItemClickListener
         {

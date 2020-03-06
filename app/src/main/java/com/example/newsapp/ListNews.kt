@@ -1,6 +1,7 @@
 package com.example.newsapp
 
 import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,8 +35,11 @@ class ListNews : AppCompatActivity() {
         mService = Common.newsService
         dialog = SpotsDialog(this)
         swipe_to_refresh.setOnRefreshListener { loadNews(source, true) }
+
         diagonalLayout.setOnClickListener{
-            //Soon
+            val detailIntent = Intent(baseContext, NewsDetail::class.java)
+            detailIntent.putExtra("webURL", webHotUrl)
+            startActivity(detailIntent)
         }
 
         list_news.setHasFixedSize(true)

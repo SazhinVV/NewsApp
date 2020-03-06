@@ -9,6 +9,7 @@ class ListSourceViewHolder(itemView: View):RecyclerView.ViewHolder(itemView), Vi
 
     private lateinit var itemClickListener:ItemClickListener
     var source_title = itemView.source_news_name
+    var source_image = itemView.news_image
 
     init {
         itemView.setOnClickListener(this)
