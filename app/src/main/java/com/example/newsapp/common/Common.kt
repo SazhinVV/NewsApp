@@ -1,7 +1,8 @@
-package com.example.newsapp.Common
+package com.example.newsapp.common
 
-import com.example.newsapp.Interface.NewsService
-import com.example.newsapp.Remote.RetrofitClient
+import com.example.newsapp.interfaces.NewsService
+import com.example.newsapp.remote.RetrofitClient
+
 import java.lang.StringBuilder
 
 object Common {
@@ -9,7 +10,7 @@ object Common {
     val API_KEY = "6d164a0d5a024dd2a181fa35d01e5bbf"
 
     val newsService:NewsService
-        get()=RetrofitClient.getClient(BASE_URL).create(NewsService::class.java)
+        get()= RetrofitClient.getClient(BASE_URL).create(NewsService::class.java)
 
     fun getNewsAPI(source: String):String{
         val apiUrl = StringBuilder("http://newsapi.org/v2/top-headlines?sources=")
@@ -19,5 +20,4 @@ object Common {
             .toString()
         return apiUrl
     }
-
 }

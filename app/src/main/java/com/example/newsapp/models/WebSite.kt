@@ -1,4 +1,4 @@
-package com.example.newsapp.Model
+package com.example.newsapp.models
 
 class WebSite {
     var sources: List<Source>?=null

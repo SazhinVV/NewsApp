@@ -1,4 +1,4 @@
-package com.example.newsapp.Common
+package com.example.newsapp.common
 
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
@@ -17,10 +17,8 @@ object ISO8601Parser {
             val inset = 6
             val startText = input.subSequence(0, input.length-inset)
             val endText = input.substring(input.length-inset, input.length)
-
             input = StringBuilder(startText).append("GMT").append(endText).toString()
         }
-
         return df.parse(input)
     }
 

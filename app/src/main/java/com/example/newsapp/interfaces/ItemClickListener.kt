@@ -1,9 +1,8 @@
-package com.example.newsapp.Interface
+package com.example.newsapp.interfaces
 
 import android.view.View
 
 interface ItemClickListener {
    fun onClick(view: View, position: Int){
-
    }
 }

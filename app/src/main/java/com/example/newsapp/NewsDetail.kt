@@ -27,7 +27,6 @@ class NewsDetail : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 alertDialog.dismiss()
             }
-
         }
 
         if(intent != null)

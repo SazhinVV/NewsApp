@@ -4,12 +4,11 @@ import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.widget.ThemedSpinnerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsapp.Adapter.ViewHolder.ListSourceAdapter
-import com.example.newsapp.Common.Common
-import com.example.newsapp.Interface.NewsService
-import com.example.newsapp.Model.WebSite
+import com.example.newsapp.adapters.ListSourceAdapter
+import com.example.newsapp.common.Common
+import com.example.newsapp.interfaces.NewsService
+import com.example.newsapp.models.WebSite
 import com.google.gson.Gson
 import dmax.dialog.SpotsDialog
 import io.paperdb.Paper
@@ -49,22 +48,20 @@ class MainActivity : AppCompatActivity() {
 
         if (!isRefresh){
             val cache = Paper.book().read<String>("cache")
-            if (cache != null && !cache.isBlank() && cache != "null")
-            {
+            if (cache != null && !cache.isBlank() && cache != "null") {
                 val webSite = Gson().fromJson<WebSite>(cache, WebSite::class.java)
                 adapter = ListSourceAdapter(baseContext, webSite)
                 adapter.notifyDataSetChanged()
                 recycle_view_source_news.adapter = adapter
-            }
-            else {
+            } else {
                 dialog.show()
                 mService.sources.enqueue(object: retrofit2.Callback<WebSite> {
                     override fun onResponse(call: Call<WebSite>, response: Response<WebSite>) {
-                        adapter = ListSourceAdapter(baseContext, response.body()!!)
+                        response.body()?.let { adapter = ListSourceAdapter(baseContext, it) }
                         adapter.notifyDataSetChanged()
                         recycle_view_source_news.adapter = adapter
 
-                        Paper.book().write("cache", Gson().toJson(response.body()!!))
+                        response.body()?.let { Paper.book().write("cache", Gson().toJson(it)) }
 
                         dialog.dismiss()
                     }
@@ -74,16 +71,15 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             }
-        }
-        else {
+        } else {
             swipe_to_refresh.isRefreshing = true
             mService.sources.enqueue(object: retrofit2.Callback<WebSite> {
                 override fun onResponse(call: Call<WebSite>, response: Response<WebSite>) {
-                    adapter = ListSourceAdapter(baseContext, response.body()!!)
+                    response.body()?.let { adapter = ListSourceAdapter(baseContext, it) }
                     adapter.notifyDataSetChanged()
                     recycle_view_source_news.adapter = adapter
 
-                    Paper.book().write("cache", Gson().toJson(response.body()!!))
+                    response.body()?.let { Paper.book().write("cache", Gson().toJson(it)) }
 
                     swipe_to_refresh.isRefreshing = false
                 }

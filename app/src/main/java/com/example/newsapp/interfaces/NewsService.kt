@@ -1,8 +1,8 @@
-package com.example.newsapp.Interface
+package com.example.newsapp.interfaces
 
-import com.example.newsapp.Model.News
+import com.example.newsapp.models.News
 import retrofit2.Call
-import com.example.newsapp.Model.WebSite
+import com.example.newsapp.models.WebSite
 import retrofit2.http.GET
 import retrofit2.http.Url
 

@@ -1,4 +1,4 @@
-package com.example.newsapp.Adapter.ViewHolder
+package com.example.newsapp.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -7,26 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapp.Interface.ItemClickListener
+import com.example.newsapp.holders.ListSourceViewHolder
+import com.example.newsapp.interfaces.ItemClickListener
 import com.example.newsapp.ListNews
-import com.example.newsapp.Model.WebSite
+import com.example.newsapp.models.WebSite
 import com.example.newsapp.R
 
 class ListSourceAdapter (private val context: Context, private val webSite: WebSite):RecyclerView.Adapter<ListSourceViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListSourceViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val itemView = inflater.inflate(R.layout.source_news_layout, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.source_news_layout, parent, false)
         return ListSourceViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return webSite.sources!!.size
-    }
+    override fun getItemCount()= webSite.sources!!.size
 
     override fun onBindViewHolder(holder: ListSourceViewHolder, position: Int) {
-        holder.source_title.text = webSite.sources!![position].name
-        var x = (1..5).shuffled().first()
-        Log.d("MyTAG", "${x}")
+        webSite.sources?.let {
+            holder.source_title.text = it[position].name
+        }
+        val x = (1..5).shuffled().first()
         when(x){
             1 -> holder.source_image.setImageResource(R.drawable.news_source_logo_1)
             2 -> holder.source_image.setImageResource(R.drawable.news_source_logo_2)
@@ -35,10 +34,7 @@ class ListSourceAdapter (private val context: Context, private val webSite: WebS
             5 -> holder.source_image.setImageResource(R.drawable.news_source_logo_5)
         }
 
-
-
-        holder.setItemClickListener(object : ItemClickListener
-        {
+        holder.setItemClickListener(object : ItemClickListener {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(context, ListNews::class.java)
                 intent.putExtra("source", webSite.sources!![position].id)
@@ -46,8 +42,6 @@ class ListSourceAdapter (private val context: Context, private val webSite: WebS
                 context.startActivity(intent)
             }
         }){
-
         }
-
     }
 }
